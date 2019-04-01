@@ -1,0 +1,33 @@
+<?php
+
+
+/**
+ * Implements hook_menu().
+ */
+function prevent_double_submit_menu() {
+  $items['admin/config/system/pds'] = array(
+    'title' => 'Prevent Double Submit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'prevent_double_submit_admin_settings',
+    ),
+    'access arguments' => array(
+      'administer site configuration',
+    ),    
+    'file' => 'prevent_double_submit.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_init().
+ */
+function prevent_double_submit_init() {  
+  drupal_add_js(drupal_get_path('module', 'prevent_double_submit') . '/prevent_double_submit.js');
+  drupal_add_js(array(
+    'pds' => array(
+      'pds_include_or_exclude' => variable_get('pds_include_or_exclude', '*'),
+      'pds_mode' => variable_get('pds_mode', 'include'),
+    ),
+  ), 'setting');  
+}

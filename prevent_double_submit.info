@@ -1,0 +1,3 @@
+name = Prevent Double Submit
+description = Prevent Double Submit
+core = 7.x
